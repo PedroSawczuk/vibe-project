@@ -10,7 +10,7 @@ void main() {
       darkTheme: CustomTheme.darkTheme, 
       themeMode: CustomTheme.themeMode, 
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.homePage,
+      initialRoute: AppRoutes.mainPage,
       getPages: AppRoutes.routes,
     ),
   );
