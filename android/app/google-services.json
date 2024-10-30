@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "798580692969",
+    "project_id": "vibe-flutter-project",
+    "storage_bucket": "vibe-flutter-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798580692969:android:448a5d9f2cee8f81eb9d78",
+        "android_client_info": {
+          "package_name": "com.example.vibe_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyJtMvtBLqv3RVr_5LlKvthdSFxNCIEGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,28 +14,28 @@ class CustomBottomNavigationBar extends StatelessWidget {
         onTap: (index) {
           controller.changePage(index);
         },
-        showSelectedLabels: false,  // Desativa labels do item selecionado
-        showUnselectedLabels: false, // Desativa labels dos itens não selecionados
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         items: [
           BottomNavigationBarItem(
             icon: Icon(IconlyBold.home),
-            label: '', // Remova o label aqui
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(IconlyBold.search),
-            label: '', // Remova o label aqui
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(IconlyBold.plus),
-            label: '', // Remova o label aqui
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(IconlyBold.notification),
+            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(IconlyBold.profile),
-            label: '', // Remova o label aqui
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(IconlyBold.setting),
-            label: '', // Remova o label aqui
+            label: '',
           ),
         ],
       ),

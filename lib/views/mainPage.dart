@@ -5,8 +5,8 @@ import 'package:vibe_project/controller/bottomNavController.dart';
 import 'package:vibe_project/views/homePage.dart';
 import 'package:vibe_project/views/posts/addPostPage.dart';
 import 'package:vibe_project/views/profilePage.dart';
+import 'package:vibe_project/views/notificationsPage.dart';
 import 'package:vibe_project/views/searchPage.dart';
-import 'package:vibe_project/views/settingsPage.dart';
 
 class MainPage extends StatelessWidget {
   final BottomNavController controller = Get.put(BottomNavController());
@@ -15,8 +15,8 @@ class MainPage extends StatelessWidget {
     HomePage(),
     SearchPage(),
     AddPostPage(),
+    NotificationsPage(),
     ProfilePage(),
-    SettingsPage(),
   ];
 
   @override

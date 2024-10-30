@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:vibe_project/views/auth/signInPage.dart';
+import 'package:vibe_project/views/auth/signUpPage.dart';
 import 'package:vibe_project/views/mainPage.dart';
 import 'package:vibe_project/views/posts/addPostPage.dart';
 import 'package:vibe_project/views/profilePage.dart';
@@ -13,6 +15,10 @@ class AppRoutes {
   static const String addPostPage = '/addPostPage';
   static const String profilePage = '/profilePage';
   static const String settingsPage = '/settingsPage';
+
+  // Auth
+  static const String signInPage = '/signInPage';
+  static const String signUpPage = '/signUpPage';
 
   static final routes = [
     GetPage(
@@ -38,6 +44,14 @@ class AppRoutes {
     GetPage(
       name: settingsPage,
       page: () => SettingsPage(),
+    ),
+    GetPage(
+      name: signInPage,
+      page: () => SignInPage(),
+    ),
+    GetPage(
+      name: signUpPage,
+      page: () => SignUpPage(),
     ),
   ];
 }
