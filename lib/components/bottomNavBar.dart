@@ -26,10 +26,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(IconlyBold.plus),
-            label: '',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(IconlyBold.notification),
             label: '',
           ),
