@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
-import 'package:vibe_project/controller/bottomNavController.dart';
+import 'package:vibe_project/controllers/bottomNavController.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   @override

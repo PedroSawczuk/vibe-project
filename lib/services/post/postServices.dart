@@ -52,7 +52,23 @@ class PostServices {
                 id: doc.id,
                 userId: doc['userId'],
                 content: doc['content'],
-                createdAt: (doc['created_at'] as Timestamp) .toDate(),
+                createdAt: (doc['created_at'] as Timestamp).toDate(),
+              );
+            }).toList());
+  }
+
+  Stream<List<Post>> getUserPosts(String userId) {
+    return _firestore
+        .collection('posts')
+        .where('userId', isEqualTo: userId)
+        .orderBy('created_at', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) {
+              return Post(
+                id: doc.id,
+                userId: doc['userId'],
+                content: doc['content'],
+                createdAt: (doc['created_at'] as Timestamp).toDate(),
               );
             }).toList());
   }

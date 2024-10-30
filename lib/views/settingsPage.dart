@@ -11,8 +11,6 @@ class SettingsPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
             child: Text('Settings!'),

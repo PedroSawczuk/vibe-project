@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
-import 'package:vibe_project/controller/posts/postController.dart';
+import 'package:vibe_project/controllers/posts/postController.dart';
 import 'package:vibe_project/models/postModel.dart';
 import 'package:vibe_project/services/post/postServices.dart';
 
@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
             child: IconButton(
               icon: Icon(IconlyBold.chat),
               onPressed: () {
-                Get.snackbar('EM BREVE...', '');
+                Get.snackbar('EM BREVE...', 'Jajá vamos implementar essa função...');
               },
             ),
           ),

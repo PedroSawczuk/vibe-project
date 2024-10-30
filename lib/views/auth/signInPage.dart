@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
-import 'package:vibe_project/services/auth/authServices.dart';
+import 'package:vibe_project/controllers/auth/authController.dart';
 import 'package:vibe_project/views/auth/signUpPage.dart';
 import 'package:vibe_project/views/mainPage.dart';
 
@@ -9,22 +9,23 @@ class SignInPage extends StatelessWidget {
   SignInPage({super.key});
 
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AuthServices _authServices = AuthServices();
+  final AuthController _authController = AuthController(); 
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       String email = _emailController.text;
       String password = _passwordController.text;
-      await _authServices.loginUser(email, password);
-      Get.snackbar(
-        'Aguarde',
-        'Entrando...',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      Get.offAll(() => MainPage());
+
+      Get.snackbar('Aguarde', 'Entrando...', snackPosition: SnackPosition.BOTTOM);
+      
+      try {
+        await _authController.signIn(email, password);
+        Get.offAll(() => MainPage());
+      } catch (e) {
+        Get.snackbar('Erro', 'Falha ao entrar: $e', snackPosition: SnackPosition.BOTTOM);
+      }
     }
   }
 
@@ -34,10 +35,7 @@ class SignInPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Entrar',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: Colors.transparent,
       ),
@@ -81,9 +79,7 @@ class SignInPage extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -92,20 +88,14 @@ class SignInPage extends StatelessWidget {
                       onPressed: () {
                         Get.offAll(() => SignUpPage());
                       },
-                      child: Text(
-                        'Crie aqui',
-                      ),
+                      child: Text('Crie aqui'),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: _submitForm,
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(240, 44),
-                  ),
+                  style: ElevatedButton.styleFrom(fixedSize: Size(240, 44)),
                   child: Text('Entrar'),
                 ),
               ],

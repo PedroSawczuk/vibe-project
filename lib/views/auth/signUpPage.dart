@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
-import 'package:vibe_project/services/auth/authServices.dart';
+import 'package:vibe_project/controllers/auth/authController.dart';
 import 'package:vibe_project/views/auth/signInPage.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -10,18 +10,14 @@ class SignUpPage extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AuthServices _authServices = AuthServices();
+  final AuthController _authController = AuthController(); 
+
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       String email = _emailController.text;
       String password = _passwordController.text;
-      await _authServices.createNewUser(email, password);
-      Get.snackbar(
-        'Aguarde',
-        'Criando conta...',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      Get.offAll(() => SignInPage());
+      Get.snackbar('Aguarde', 'Criando conta...', snackPosition: SnackPosition.BOTTOM);
+      await _authController.signUp(email, password);
     }
   }
 
@@ -31,10 +27,7 @@ class SignUpPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Criar Conta',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         backgroundColor: Colors.transparent,
       ),
@@ -78,9 +71,7 @@ class SignUpPage extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -89,20 +80,14 @@ class SignUpPage extends StatelessWidget {
                       onPressed: () {
                         Get.offAll(() => SignInPage());
                       },
-                      child: Text(
-                        'Entre aqui',
-                      ),
+                      child: Text('Entre aqui'),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: _submitForm,
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(240, 44),
-                  ),
+                  style: ElevatedButton.styleFrom(fixedSize: Size(240, 44)),
                   child: Text('Criar Conta'),
                 ),
               ],
