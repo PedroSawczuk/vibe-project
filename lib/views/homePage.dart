@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:vibe_project/controller/posts/postController.dart';
+import 'package:vibe_project/models/postModel.dart';
+import 'package:vibe_project/services/post/postServices.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final PostServices _postServices = PostServices();
+
     return Scaffold(
       appBar: AppBar(
         title: Padding(
@@ -19,19 +24,40 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
               icon: Icon(IconlyBold.chat),
-              onPressed: () {},
+              onPressed: () {
+                Get.snackbar('EM BREVE...', '');
+              },
             ),
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Text('Olá!'),
-          ),
-        ],
+      body: StreamBuilder<List<Post>>(
+        stream: _postServices.getPosts(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('Erro: ${snapshot.error}'));
+          }
+
+          final posts = snapshot.data;
+
+          return ListView.separated(
+            separatorBuilder: (context, index) {
+              return Divider();
+            },
+            itemCount: posts?.length ?? 0,
+            itemBuilder: (context, index) {
+              final post = posts![index];
+              return ListTile(
+                title: Text(post.content),
+                subtitle: Text('${post.userId} • ${post.createdAt.toLocal()}'),
+                onTap: () {},
+              );
+            },
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddPostDialog(context),

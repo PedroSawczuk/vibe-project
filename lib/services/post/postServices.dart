@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vibe_project/models/postModel.dart';
 
 class PostServices {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -39,5 +40,20 @@ class PostServices {
         snackPosition: SnackPosition.BOTTOM,
       );
     }
+  }
+
+  Stream<List<Post>> getPosts() {
+    return _firestore
+        .collection('posts')
+        .orderBy('created_at', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.map((doc) {
+              return Post(
+                id: doc.id,
+                userId: doc['userId'],
+                content: doc['content'],
+                createdAt: (doc['created_at'] as Timestamp) .toDate(),
+              );
+            }).toList());
   }
 }
