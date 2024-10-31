@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:vibe_project/controllers/posts/postController.dart';
 import 'package:vibe_project/models/postModel.dart';
 import 'package:vibe_project/services/post/postServices.dart';
+import 'package:vibe_project/views/post/detailPostPage.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -65,7 +66,9 @@ class HomePage extends StatelessWidget {
                   return ListTile(
                     title: Text(post.content),
                     subtitle: Text('$username • ${_formatDate(post.createdAt)}'),
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => DetailPostPage(post: post));
+                    },
                   );
                 },
               );
