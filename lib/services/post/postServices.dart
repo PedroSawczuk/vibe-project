@@ -72,4 +72,14 @@ class PostServices {
               );
             }).toList());
   }
+
+  Future<String> getUsernameById(String userId) async {
+    try {
+      DocumentSnapshot userDoc = await _firestore.collection('users').doc(userId).get();
+      return userDoc['username'] ?? 'Sem username';
+    } catch (e) {
+      print('Erro ao buscar username: $e');
+      return 'Sem username';
+    }
+  }
 }

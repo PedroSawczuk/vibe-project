@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
 import 'package:vibe_project/controllers/auth/authController.dart';
+import 'package:vibe_project/routes/appRoutes.dart';
 import 'package:vibe_project/views/auth/signInPage.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -18,6 +19,7 @@ class SignUpPage extends StatelessWidget {
       String password = _passwordController.text;
       Get.snackbar('Aguarde', 'Criando conta...', snackPosition: SnackPosition.BOTTOM);
       await _authController.signUp(email, password);
+      Get.offAndToNamed(AppRoutes.signInPage);
     }
   }
 
