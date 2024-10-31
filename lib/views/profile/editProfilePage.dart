@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vibe_project/controllers/profile/profileController.dart';
+import 'package:vibe_project/theme/customTheme.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
@@ -10,7 +11,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   final EditProfileController _controller = EditProfileController();
-  String _username = "Sem username";
+  String _username = "";
 
   @override
   void initState() {
@@ -29,7 +30,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     showDialog(
       context: context,
       builder: (context) {
-        final TextEditingController _usernameController = TextEditingController(text: _username);
+        final TextEditingController _usernameController =
+            TextEditingController(text: _username);
 
         return AlertDialog(
           title: Text('Editar Username'),
@@ -73,6 +75,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              'Seu username:',
+              style: TextStyle(
+                  color: CustomTheme.theme.colorScheme.outlineVariant),
+            ),
             Row(
               children: [
                 Expanded(

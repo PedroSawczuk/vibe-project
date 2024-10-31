@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
+import 'package:intl/intl.dart';
 import 'package:vibe_project/models/postModel.dart';
 import 'package:vibe_project/routes/appRoutes.dart';
 import 'package:vibe_project/services/post/postServices.dart';
@@ -87,7 +88,7 @@ class ProfilePage extends StatelessWidget {
                         final post = posts![index];
                         return ListTile(
                           title: Text(post.content),
-                          subtitle: Text('${post.createdAt.toLocal()}'),
+                          subtitle: Text('${_formatDate(post.createdAt)}'),
                           onTap: () {},
                         );
                       },
@@ -109,5 +110,9 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _formatDate(DateTime dateTime) {
+    return DateFormat('dd/MM/yyyy, HH:mm').format(dateTime.toLocal());
   }
 }
