@@ -14,7 +14,7 @@ Future<void> main() async {
   );
   runApp(
     GetMaterialApp(
-      theme: CustomTheme.theme, 
+      theme: CustomTheme.lightTheme, 
       darkTheme: CustomTheme.darkTheme, 
       themeMode: CustomTheme.themeMode, 
       debugShowCheckedModeBanner: false,

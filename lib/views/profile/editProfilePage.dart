@@ -78,7 +78,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             Text(
               'Seu username:',
               style: TextStyle(
-                  color: CustomTheme.theme.colorScheme.outlineVariant),
+                  color: CustomTheme.lightTheme.colorScheme.outlineVariant),
             ),
             Row(
               children: [

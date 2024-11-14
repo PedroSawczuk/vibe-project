@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:vibe_project/models/postModel.dart';
 
 class DetailPostPage extends StatelessWidget {
@@ -22,29 +23,50 @@ class DetailPostPage extends StatelessWidget {
               if (snapshot.hasError) {
                 return Text('Erro ao carregar username');
               }
-              final username = snapshot.data ?? 'Usuário não encontrado';
+              final username = snapshot.data ?? 'User Not Found';
               return Text('Post de $username');
             },
           ),
         ),
         backgroundColor: Colors.transparent,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(post.content),
+      body: FutureBuilder<String>(
+        future: getUsernameById(post.userId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(child: Text('Erro ao carregar username'));
+          }
+          final username = snapshot.data ?? 'User Not Found';
+
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(post.content),
+                ),
+                Text('$username • ${_formatDate(post.createdAt)}'),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
 
+  String _formatDate(DateTime dateTime) {
+    return DateFormat('dd/MM/yyyy, HH:mm').format(dateTime.toLocal());
+  }
+
   Future<String> getUsernameById(String userId) async {
     try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
       return userDoc['username'] ?? 'Sem username';
     } catch (e) {
       print('Erro ao buscar username: $e');

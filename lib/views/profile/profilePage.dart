@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:vibe_project/models/postModel.dart';
 import 'package:vibe_project/routes/appRoutes.dart';
 import 'package:vibe_project/services/post/postServices.dart';
+import 'package:vibe_project/views/post/detailPostPage.dart';
 import '../../theme/customTheme.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -49,7 +50,7 @@ class ProfilePage extends StatelessWidget {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: CustomTheme.theme.colorScheme.error,
+                      backgroundColor: CustomTheme.lightTheme.colorScheme.error,
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () async {
@@ -89,7 +90,9 @@ class ProfilePage extends StatelessWidget {
                         return ListTile(
                           title: Text(post.content),
                           subtitle: Text('${_formatDate(post.createdAt)}'),
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(() => DetailPostPage(post: post));
+                          },
                         );
                       },
                       separatorBuilder: (context, index) {

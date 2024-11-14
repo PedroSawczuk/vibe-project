@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
                     );
                   }
 
-                  final username = snapshot.data ?? 'Usuário não identificado';
+                  final username = snapshot.data ?? 'Usuário not Found';
                   return ListTile(
                     title: Text(post.content),
                     subtitle: Text('$username • ${_formatDate(post.createdAt)}'),

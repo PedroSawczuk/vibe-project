@@ -6,7 +6,7 @@ class CustomTheme {
 // same or higher package version, but still same major version. If you
 // use a lower package version, some properties may not be supported.
 // In that case remove them after copying this theme to your app.
-  static final theme = FlexThemeData.light(
+  static final lightTheme = FlexThemeData.light(
     scheme: FlexScheme.bahamaBlue,
     surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
     blendLevel: 7,
