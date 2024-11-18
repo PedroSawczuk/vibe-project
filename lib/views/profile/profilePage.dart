@@ -8,9 +8,20 @@ import 'package:vibe_project/services/post/postServices.dart';
 import 'package:vibe_project/utils/dateUtils.dart';
 import 'package:vibe_project/views/post/detailPostPage.dart';
 import '../../theme/customTheme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
+
+  Future<String> _getUsername(String userId) async {
+    try {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      return userDoc['username'] ?? 'Sem nome de usuário';
+    } catch (e) {
+      print('Erro ao carregar username: $e');
+      return 'Sem nome de usuário';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +48,27 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           children: [
             if (user != null) ...[
-              Text('${user.email}', style: TextStyle(fontSize: 18)),
+              // Exibe o nome de usuário e o e-mail
+              FutureBuilder<String>(
+                future: _getUsername(user.uid),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
+                  if (snapshot.hasError) {
+                    return Text('Erro ao carregar username');
+                  }
+
+                  final username = snapshot.data ?? 'Sem nome de usuário';
+                  return Column(
+                    children: [
+                      Text(username, style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 10),
+                      Text('${user.email}', style: TextStyle(fontSize: 18)),
+                    ],
+                  );
+                },
+              ),
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -114,6 +145,4 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
-
- 
 }

@@ -5,13 +5,19 @@ import 'package:vibe_project/controllers/auth/authController.dart';
 import 'package:vibe_project/views/auth/signUpPage.dart';
 import 'package:vibe_project/views/mainPage.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   SignInPage({super.key});
 
+  @override
+  _SignInPageState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final AuthController _authController = AuthController(); 
+  final AuthController _authController = AuthController();
+  bool _isPasswordVisible = false;
 
   void _submitForm() async {
     if (_formKey.currentState!.validate()) {
@@ -66,12 +72,24 @@ class SignInPage extends StatelessWidget {
                 SizedBox(height: 10),
                 TextFormField(
                   controller: _passwordController,
+                  obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
                     labelText: 'Senha',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(IconlyBold.password),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible
+                            ? IconlyBold.hide
+                            : IconlyBold.show,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
                   ),
-                  obscureText: true,
                   validator: (value) {
                     if (value == null || value.length < 6) {
                       return 'A senha deve ter pelo menos 6 caracteres';
