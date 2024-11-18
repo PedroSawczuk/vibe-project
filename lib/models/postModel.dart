@@ -4,9 +4,10 @@ class Post {
   final String content;
   final DateTime createdAt;
 
-  Post(
-      {required this.id,
-      required this.userId,
-      required this.content,
-      required this.createdAt});
+  Post({
+    required this.id,
+    required this.userId,
+    required this.content,
+    required this.createdAt,
+  });
 }

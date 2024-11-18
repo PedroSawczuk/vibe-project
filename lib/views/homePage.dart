@@ -1,13 +1,17 @@
+// lib/views/homePage.dart
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconly/iconly.dart';
-import 'package:intl/intl.dart';
 import 'package:vibe_project/controllers/posts/postController.dart';
 import 'package:vibe_project/models/postModel.dart';
 import 'package:vibe_project/services/post/postServices.dart';
+import 'package:vibe_project/utils/dateUtils.dart';  
 import 'package:vibe_project/views/post/detailPostPage.dart';
 
 class HomePage extends StatelessWidget {
+  final PostController _postController = PostController(); 
+
   HomePage({super.key});
 
   @override
@@ -58,17 +62,48 @@ class HomePage extends StatelessWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return ListTile(
                       title: Text(post.content),
-                      subtitle: Text('Carregando username... • ${_formatDate(post.createdAt)}'),
+                      subtitle: Text('Carregando username... • ${DateFormatter.formatDate(post.createdAt)}'),
                     );
                   }
 
-                  final username = snapshot.data ?? 'Usuário not Found';
-                  return ListTile(
-                    title: Text(post.content),
-                    subtitle: Text('$username • ${_formatDate(post.createdAt)}'),
-                    onTap: () {
-                      Get.to(() => DetailPostPage(post: post));
-                    },
+                  final username = snapshot.data ?? 'User Not Found';
+                  return Column(
+                    children: [
+                      ListTile(
+                        title: Text(post.content),
+                        subtitle: Text('$username • ${DateFormatter.formatDate(post.createdAt)}'),
+                        onTap: () {
+                          Get.to(() => DetailPostPage(post: post));
+                        },
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              icon: Icon(IconlyBold.heart),
+                              onPressed: () {
+                                Get.snackbar('Curtir', 'Em breve...');
+                              },
+                            ),
+                            Text('0'),
+                            IconButton(
+                              icon: Icon(IconlyBold.chat),
+                              onPressed: () {
+                                Get.snackbar('Comentar', 'Em breve...');
+                              },
+                            ),
+                            Text('0'),
+                            IconButton(
+                              icon: Icon(IconlyBold.send),
+                              onPressed: () {
+                                Get.snackbar('Compartilhar', 'Em breve...');
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   );
                 },
               );
@@ -77,61 +112,9 @@ class HomePage extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showAddPostDialog(context),
+        onPressed: () => _postController.showAddPostDialog(context),
         child: Icon(IconlyBold.plus),
       ),
-    );
-  }
-
-  String _formatDate(DateTime dateTime) {
-    return DateFormat('dd/MM/yyyy, HH:mm').format(dateTime.toLocal());
-  }
-
-  void _showAddPostDialog(BuildContext context) {
-    final TextEditingController _postContentController = TextEditingController();
-    final PostController _postController = PostController();
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('Novo Post'),
-          content: Form(
-            key: _formKey,
-            child: TextFormField(
-              controller: _postContentController,
-              decoration: InputDecoration(
-                labelText: 'Conteúdo do Post',
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Por favor, insira algum conteúdo.';
-                }
-                return null;
-              },
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancelar'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  String postContent = _postContentController.text;
-                  _postController.createPost(context, postContent);
-                  Navigator.of(context).pop();
-                }
-              },
-              child: Text('Fazer Post'),
-            ),
-          ],
-        );
-      },
     );
   }
 }
